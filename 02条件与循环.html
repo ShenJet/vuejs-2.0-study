@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="a">
+        <!--条件-->
+        <!--v-if==false时，元素 消失  -->
+        <p v-if="show">
+            paragraph
+        </p>
+        
+        <!--循环, 类比ng的ng-repeat-->
+        <ol>
+            <li v-for="x in items">{{x}}</li>
+        </ol>
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el:"#a",
+        data:{
+            show:0,
+            items:['jack','tom','java']
+        }
+    })
+</script>
+</html>

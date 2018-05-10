@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            /*width:600px;*/
+            display:-webkit-flex;
+            display:flex;
+            background:#ccc;
+        }
+        p{
+            /*flex:1;*/
+            width: 200px;
+            background-color:red;
+        }
+        .box>div{
+            flex: 1;
+            background: greenyellow;
+    
+        }
+        .box>div:nth-child(3){
+            /*flex: 1;*/
+            width: 200px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p>Double Line</p>
+        <div>2</div>
+        <div>3</div>
+    </div>
+</body>
+</html>

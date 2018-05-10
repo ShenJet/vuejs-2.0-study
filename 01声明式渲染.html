@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+   <!-- 文本插值 -->
+    <div id="a">{{data1}}</div>
+
+    <!-- 绑定属性值 -->
+    <p v-bind:title:></p>
+</body>
+<script>
+    let app = new Vue({
+        el:'#a',
+        data:{
+            data1:"new vue"
+        }
+    })
+    // 现在数据和 DOM 已经被建立了关联，所有东西都是响应式的。我们要怎么确认呢？
+    // 打开你的浏览器的 JavaScript 控制台 (就在这个页面打开)，并修改 app.message 的值，
+    // 你将看到上例相应地更新。
+</script>
+</html>

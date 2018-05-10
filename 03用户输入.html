@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <!--可以用 v-on 指令添加一个事件监听器，通过它调用在 Vue 实例中定义的方法：-->
+    <div id="a">
+        <p>{{msg}}</p>
+        <button v-on:click="reverse">反转字符</button>
+        <br>
+        <!--可使用v-model双向绑定 类似ng-model-->
+        <input type="text" v-model="ph" v-on:change="change">
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el:"#a",
+        data:{
+            msg:"hello vue",
+            ph:"请输入用户名"
+        },
+        methods:{
+            //组件方法
+            reverse:function () {
+                console.log(this)
+                // this:组件对象
+                this.msg = this.msg.split('').reverse().join('')
+            },
+            change:function () {
+                console.log(this.ph)
+            }
+        }
+    })
+    
+    
+</script>
+</html>

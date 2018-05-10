@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+
+</head>
+<body>
+    <div id="a">
+        <ul>
+            <!--v-bind:xxx xxx即某prop，传入template中-->
+            <todo-item v-for="x in items" v-bind:todo="x.text" v-bind:id="x.id"></todo-item>
+        </ul>
+    </div>
+</body>
+<script>
+    
+    // 定义名为 todo-item 的新组件
+    // 注册一个name=todo-itme的新组件
+    Vue.component('todo-item', {
+        props:['todo'],
+        template: '<li>{{todo}}</li>'
+    })
+    
+    let app = new Vue({
+        el:"#a",
+        data:{
+            items:[{id:1,text:'java'},
+                {id:2,text:'python'},
+                {id:3,text:'html'},
+                {id:4,text:'css'}]
+        }
+    })
+
+
+
+</script>
+</html>
