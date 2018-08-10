@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>06todo练习</title>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_777044_rlau3tn65ln.css">
+    <style>
+        body{
+            padding: 10px;
+        }
+        button{
+            margin-top: 10px;
+        }
+        .operate{
+            font-size: 12px;
+            margin: 0 5px 0 0;
+        }
+        i.iconfont{
+            font-size: 20px;
+        }
+        i.iconfont.sjicon-zhiding{
+            color: #007bff;
+        }
+        i.iconfont.sjicon-yiwancheng{
+            color: #28a745;
+        }
+        i.iconfont.sjicon-daibanrenwu{
+            color: #ffae00;
+        }
+    </style>
+</head>
+<body>
+    <div id="a">
+        <input type="text" 
+        v-model="msg"
+        class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" 
+        placeholder="请输入新事项~">
+
+        <button type="button" class="btn btn-primary"
+        @click="add"
+        >添加事项</button>
+        <hr>
+        <div>
+            <ol class="list-group">
+                <li class="list-group-item" v-for="x in list"  v-if="!x.del">
+                    <i class="iconfont sjicon-zhiding" v-if="x.totop"></i>
+                    <i class="iconfont sjicon-yiwancheng" v-if="x.finished"></i>
+                    <i class="iconfont sjicon-daibanrenwu" v-if="!x.finished"></i>
+                    {{x.time}}
+                    <div>{{x.text}}</div>
+                    <div>
+                        <button type="button" class="btn btn-primary operate" @click="totop(x)">置顶</button>
+                        <button type="button" class="btn btn-success operate" @click="finish(x)">已完成</button>
+                        <button type="button" class="btn btn-danger operate" @click="del(x)">删除</button>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    /*
+    * @Author: ShenJie 
+    * @Date: 2018-08-03 21:23:34 
+ * @Last Modified by: ShenJie
+ * @Last Modified time: 2018-08-03 22:39:31
+    */
+    var vm = new Vue({
+        el:"#a",
+        data:{
+            msg:null,
+            list:[]
+        },
+        methods:{
+            add(){
+                var newtodo = {
+                    text:this.msg,
+                    timestamp:new Date().getTime(),
+                    time: new Date().toLocaleString(),
+                    totop:false,
+                    finished:false,
+                    del:false,
+                    id:this.list.length
+                }
+                this.list.unshift(newtodo)
+                this.msg = ''
+            },
+            totop(x){
+                if(x.totop) return
+                
+                this.list.map(function(v,i) {
+                    v.totop = false;
+                    if(v === x){
+                        vm.list.splice(i,1)
+                        vm.list.unshift(x)
+                        return
+                    }
+
+                })
+                x.totop = true
+                
+            },
+            finish(x){
+                x.finished = true
+            },
+            del(x){
+                x.del = true                
+            }
+        }
+    })
+
+
+</script>
+</html>

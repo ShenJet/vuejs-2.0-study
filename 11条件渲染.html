@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="a">
+        <h2>1.v-if</h2>
+        <div v-if='show'>{{msg}}</div>
+        <div v-else>看不见了</div>
+        <h4>v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，
+            否则它将不会被识别。</h4>
+        <h4>在template上使用v-if条件渲染分组</h4>
+        <h4>这样可以使template中的所有标签都受到这一个v-if控制</h4>
+        
+        <!-- v-else-if （v2.1.0） -->
+        <div v-if="type === 'A'">
+        A
+        </div>
+        <div v-else-if="type === 'B'">
+        B
+        </div>
+        <div v-else-if="type === 'C'">
+        C
+        </div>
+        <div v-else>
+        Not A/B/C
+        </div>
+        <h3>类似于 v-else，v-else-if 也必须紧跟在带 v-if 或者 v-else-if 的元素之后。</h3>
+        <h4>用 key 管理可复用的元素</h4>
+        <div v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username">
+        </div>
+        <div v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address">
+        </div>
+        <h4>假如你不想它们这样关联，则可以给input加不同key，保持唯一性</h4>
+        <h4>注意，<label> 元素仍然会被高效地复用，因为它们没有添加 key 属性。</h4>
+        <div v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="username">
+        </div>
+        <div v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address" key="not_username">
+        </div>
+        <h2>2.v-show</h2>
+        <h1 v-show="ok">Hello!</h1>
+        <h4>**不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。
+            v-show 只是简单地切换元素的 CSS 属性 display。
+            <br>
+            ***，v-show 不支持 <template> 元素，也不支持 v-else。
+        </h4>
+        <h3>总结：
+            v-if是真正的条件渲染 <br>
+            v-show只是改变display：none <br>
+            v-if性能开销比较大，v-show的首次开销大 <br>
+            所以，对于频繁切换的用v-show好，如果不是，则用v-if。
+        </h3>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+   
+    var vm = new Vue({
+        el:"#a",
+        data:{
+            show:true,
+            msg:"aslkdjfaksdf",
+            type:"B",
+            loginType:"'username",
+            ok:true
+        }
+    })
+
+</script>
+</html>

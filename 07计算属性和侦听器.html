@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性和侦听器</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="a">
+        <h3>计算属性 vs 方法</h3>
+        <!-- 这个地方，模板不再是简单的声明式逻辑,不推荐这样使用，应该使用计算属性 -->
+        <p>模板内表达式：{{name.toString().split('').reverse().join('')}}</p>
+        <p>计算属性：{{reversedname}}</p>
+        <p style="color: red">计算属性是基于它们的依赖进行缓存的,<br>
+            getdate1没有依赖项，因此不同时间获取计算属性getDate1的值始终都是一开始的那个。
+            而不同时间调用getDate(),拿到的值始终是实时的。
+        </p>
+        <p>计算属性：{{getDate1}}</p>
+        <p>methods中方法：{{getDate()}}</p>
+    </div>
+    <div id="b">
+        <h3>计算属性 vs 侦听属性</h3>
+        <p>
+            Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：<span style="color: red">侦听属性</span>。
+            当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch
+        </p>  
+        <p>计算属性：{{fullname}}</p>
+        <p>侦听属性：{{fullname}}</p>
+
+    </div>
+</body>
+
+<script>
+    // 计算属性 vs 方法
+    let vm = new Vue({
+        el:"#a",
+        data:{
+            name:"name：JACK"
+        },
+        methods:{
+            func1(){
+                console.log('func1')
+            },
+            getDate () {
+                console.log('getDate method')
+                setInterval(()=>{
+                    console.log(vm.getDate1);
+                },1000)
+                return Date.now()
+            }
+        },
+        // 计算属性
+        // ***原则：对于任何复杂逻辑，你都应当使用计算属性。
+        computed:{
+            // 颠倒字符串的逻辑写在了计算属性的函数中
+            reversedname(){
+                return this.name.toString().split('').reverse().join('')
+            },
+            getDate1:function(){
+                // 一直么有变化 因为没有依赖任何其他变量    
+                console.log('getDate attr')
+                return Date.now()
+            }
+        }
+    })
+
+    const vm2 = new Vue({
+        el:"#b",
+        data:{
+            name1:"steve",
+            name2:"jobs",
+
+            // 使用watch时解注此行
+            // fullname:"steve jobs"
+        },
+        methods:{
+            
+        },
+        computed:{
+            fullname(){
+                return this.name1+" "+this.name2
+            },
+            // 注意。默认计算属性只有getter，当然也可以设置个setter：
+            fullname1:{
+                get:function(){
+                    return this.firstName + ' ' + this.lastName
+                },
+                // setter
+                // 现在再运行 vm.fullName1 = 'John Doe' 时，setter 会被调用，
+                // vm.name1 和 vm.name2 也会相应地被更新。
+                set:function(v){
+                    let nameArr = v.split(" ");
+                    this.name1 = nameArr[0];
+                    this.name2 = nameArr[1];
+                }
+            }
+        },
+        // watch:{
+        //     // 这里观察name1和name2，一有变动就反映到fullname上
+        //     name1:function(v){
+        //         this.fullname = v + " " + this.name2
+        //     },
+        //     name2:function(v){
+        //         this.fullname = this.name1 + " " + v
+        //     }
+        // }
+    })
+
+    
+
+</script>
+</html>

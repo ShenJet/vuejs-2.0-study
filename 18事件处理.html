@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="a">
+       <button v-on:click="fn">弹窗</button>
+       <br>
+       <button @click="count++">加1</button>
+       <p>{{ count }}</p>
+       <h4>传参</h4>
+       <button v-on:click="fn1('jack')">问候</button>
+       <br>
+       <h4>内联语句处理器中访问原始的 DOM 事件 （$event）</h4>
+       <button v-on:click="warn('表单未填写完整警告', $event)">
+            表单提交
+        </button>
+
+        <h3>一些事件修饰符</h3>
+        <h4 style="color: red">
+                在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。
+                尽管我们可以在方法中轻松实现这点，但更好的方式是：
+                方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。
+        </h4>
+        <ul>
+                <li>.stop</li>
+                <li>.prevent</li>
+                <li>.capture</li>
+                <li>.self</li>
+                <li>.once</li>
+                <li>.passive</li>
+        </ul>
+        <!-- 阻止单击事件继续传播 -->
+        <a v-on:click.stop="doThis">doThis</a>
+
+        <!-- 提交事件不再重载页面 -->
+        <form v-on:submit.prevent="onSubmit">
+            <input type="text">
+            <br>
+            <input type="submit" value="提交">
+        </form>
+
+        <!-- 修饰符可以串联 -->
+        <a v-on:click.stop.prevent="doThat">doThat</a>
+
+        <!-- 只有修饰符 -->
+        <form v-on:submit.prevent>
+            <input type="text">
+            <br>
+            <input type="submit" value="提交">
+        </form>
+
+        <!-- 添加事件监听器时使用事件捕获模式 -->
+        <!-- 即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理 -->
+        <div v-on:click.capture="doThis">doThis</div>
+
+        <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+        <!-- 即事件不是从内部元素触发的 -->
+        <div v-on:click.self="doThat">doThat</div>
+    </div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+
+    new Vue({
+        el: '#a',
+        data: {
+            count:0,
+        },
+        methods: {
+            fn(){
+                alert('弹窗')
+            },
+            fn1(x){
+                alert(`你好,${x}`)
+            },
+            warn(x,e){
+                console.log(x);
+                console.log(e);
+                // 假设表单未填写完整
+                if(e) e.preventDefault();
+                alert(x)
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="a">
+        <h3>实现可以调整博文字号的功能</h3>
+        <h4>调用内建的 $emit 方法并传入事件的名字，来向父级组件触发一个事件：</h4>
+        
+        <!-- <div :style="{ fontSize: postFontSize + 'px' }"> -->
+            <!-- <blog1 v-for="x in list" 
+            :item="x"
+            :key="x.id+'a'"
+            @change-text="postFontSize += 1"
+            ></blog1> -->
+        <!-- </div> -->
+        <div :style="{ fontSize: postFontSize + 'px' }">
+            <h3>使用事件抛出一个值 : $emit(x,y), 这个y参数可在父组件中通过$event变量获取</h3>
+            <!-- 在子组件中添加一个参数 -->
+            <!-- <blog1 v-for="x in list" 
+            :item="x"
+            :key="x.id+'a'"
+            @change-text="postFontSize += $event"
+            ></blog1> -->
+        </div>
+        <div :style="{ fontSize: postFontSize + 'px' }">
+            <!-- <h3>如果这个事件处理函数是一个方法</h3>
+            <h3>则这个第二个参数会默认作为第一个参数传入该函数</h3>
+            <blog1 v-for="x in list" 
+            :item="x"
+            :key="x.id+'a'"
+            @change-text="changeFontSize"
+            ></blog1> -->
+        </div>
+
+    </div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+    Vue.component("blog1",{
+        props:['item'],
+        template:`<div><h2>{{item.title}}
+                    <span style='fontSize:14px'>({{item.date}})</span>
+                </h2>
+                <button @click="$emit('change-text',5)">
+                    调整字号
+                </button>
+                <h5>作者：{{item.author}}</h5>
+                <p>{{item.content}}</p></div>`
+                // 注意 这里相当于给父级组件自定义了一个事件 叫change-text 地位上等价于onclick事件
+    })
+    var vm = new Vue({
+        el: '#a',
+        data: {
+            list:[
+                {id:0,text:"厉害了我的国！",date:new Date().toLocaleString(),author:"Tompson",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},  
+                {id:1,text:"新款iphone9月上市！",date: new Date().toLocaleString(),author:"Jackson",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},
+                {id:2,text:"震惊！他们居然做这些事",date:new Date().toLocaleString(),author:"Macle",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},
+                {id:3,text:"VUE教程",date:new Date().toLocaleString(),author:"Heven",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},
+            ],
+            postFontSize: 12,
+
+        },
+        methods: {
+            changeFontSize(x){
+                console.log(x);
+                
+                this.postFontSize += x
+            }
+        }
+    })
+</script>
+
+</html>

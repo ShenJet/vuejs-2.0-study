@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="a">
+        <h3>通过 Prop 向子组件传递数据</h3>
+        <h4>有时候必须得向子组件传递数据 才能使用。</h4>
+        <!-- 比如一个文章的标题组件 -->
+        <blog-title :title="title"></blog-title>
+        <!-- 也能写死这个传递的属性 -->
+        <blog-title title="端午的鸭蛋"></blog-title>
+        <!-- v-for渲染若干标题组件 -->
+        <!-- <blog-title v-for="x in list" 
+        :title="x.text"
+        :date="x.date"
+        :key="x.id"
+        ></blog-title> -->
+        <!-- 一篇完整的博客 -->
+        <blog v-for="x in list" 
+        :title="x.text"
+        :date="x.date"
+        :key="x.id"
+        :author="x.author"
+        :content="x.content"
+        ></blog>
+        
+        <h3>写到这里  发现如果文章信息更多则需要的prop传递也更多，所以需要变个模式了</h3>
+        <h3>即  传递的属性不再是对象内部的某个具体属性，而是整个对象：</h3>
+        <blog1 v-for="x in list" 
+        :item="x"
+        :key="x.id+'a'"
+        ></blog1>
+        <h4>这中写法下，不论子项x中的字段、属性怎么变，都可以在blog1组件中使用了。</h4>    
+        
+        <h3>谨记：子组件要遵循‘单个根元素’的原则</h3>
+
+    </div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+    Vue.component("blog-title",{
+        props:['title','date'],
+        template:`<h2>{{title}}
+                    <span style='fontSize:14px'>({{date}})</span>
+                </h2>`
+    })
+    Vue.component("blog",{
+        props:['title','date','content','author'],
+        template:`<div><h2>{{title}}
+                    <span style='fontSize:14px'>({{date}})</span>
+                </h2>
+                <h5>作者：{{author}}</h5>
+                <p>{{content}}</p></div>`
+    })
+    Vue.component("blog1",{
+        props:['item'],
+        template:`<div><h2>{{item.title}}
+                    <span style='fontSize:14px'>({{item.date}})</span>
+                </h2>
+                <h5>作者：{{item.author}}</h5>
+                <p>{{item.content}}</p></div>`
+    })
+    var vm = new Vue({
+        el: '#a',
+        data: {
+            title:"厉害了我的国！",
+            list:[
+                {id:0,text:"厉害了我的国！",date:new Date().toLocaleString(),author:"Tompson",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},  
+                {id:1,text:"新款iphone9月上市！",date: new Date().toLocaleString(),author:"Jackson",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},
+                {id:2,text:"震惊！他们居然做这些事",date:new Date().toLocaleString(),author:"Macle",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},
+                {id:3,text:"VUE教程",date:new Date().toLocaleString(),author:"Heven",content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容"},
+
+            ]
+        },
+        methods: {
+            
+        }
+    })
+</script>
+
+</html>

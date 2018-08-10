@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>09class与style绑定</title>
+    <style>
+        .g{
+            color: green;
+        }
+        .r{
+            color: red;
+        }
+        .bg_yellowgreen{
+            background-color: yellowgreen;
+        }
+        .yellow{
+            color: yellow;
+        }
+        .blue{
+            color: blue;
+        }
+        .purple{
+            color: purple;
+        }
+        
+        .fs20{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <article>
+            操作元素的 class 列表和内联样式是数据绑定的一个常见需求。
+            因为它们都是属性，所以我们可以用 v-bind 处理它们：
+            只需要通过表达式计算出字符串结果即可。
+    </article>
+
+    <article>
+            不过，字符串拼接麻烦且易错。
+            因此，<b>在将 v-bind 用于 class 和 style 时，Vue.js 做了专门的增强。
+                    表达式结果的类型除了字符串之外，还可以是对象或数组。</b>
+    </article>
+    <h3>1.动态类名的 对象语法</h3>
+    <div id="a">
+        <div id="b" v-bind:class="{r:class1,g:class2}">
+            {{ info }}
+        </div>
+        <button @click="changeinfo">bian</button>
+        <div id="c" v-bind:class="class3">
+            {{ info }}
+        </div>
+    </div>
+    <h3>2.动态类名的 数组语法</h3>
+    <div id="a1">
+        <h3>数组中的项指向某一类名</h3>
+        <div id="b" v-bind:class="[class1,class2]">
+            {{ info }}
+        </div>
+        <h3>数组中的项可以是表达式</h3>
+        <div id="b" v-bind:class="[class4?class5:class6,class7]">
+            {{ info }}
+        </div>
+        <button @click="changeinfo">bian</button>
+    </div>
+    <div id="a2">
+        <h3>用在组件上的类名</h3>
+        <myp class="fs20"></myp>
+        <!-- 最终渲染出的结果是： -->
+        <!-- <p class="yellow fs20">....</p> -->
+
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#a",
+        data:{
+            info:"恭喜你过关啦",
+            class1: true,
+            class2:false,
+            class3:{
+                r:false,
+                'g':true
+            },
+
+        },
+        methods:{
+            changeinfo(){
+                this.class1 = !this.class1
+                this.class2 = !this.class2
+            }
+        }
+    });
+    var vm1 = new Vue({
+        el:"#a1",
+        data:{
+            info:"恭喜你过关啦",
+            class1: 'r',
+            class2:'g',
+            class4:true,
+            class5:"orange",
+            class6:"blue",
+            class7:"purple",
+        },
+        methods:{
+            changeinfo(){
+                this.class1 = !this.class1
+                this.class2 = !this.class2
+            }
+        }
+    });
+    Vue.component("myp",{
+        template:"<p class='yellow'>我是自定义组件</p>"
+    })
+    var vm2 = new Vue({
+        el:"#a2",
+        data:{
+            info:"恭喜你过关啦",
+            class1: 'r',
+            class2:'g',
+        },
+        methods:{
+
+        }
+    })
+
+</script>
+</html>

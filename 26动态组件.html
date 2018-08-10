@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .tab{
+        width: 400px;
+        height: 80px;
+    border: 1px solid #ddd;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="a">
+        <div>
+            <button v-for="(x,i) in tabs"  @click="currenttab = x" :key="x">{{ x }}</button>
+            <component :is="currenttab" :content="content"></component>
+        </div>
+        <hr>
+        <h3>解析 DOM 模板时的注意事项</h3>
+        <h4>有些 HTML 元素，诸如 ul、ol、table 和 select，对于哪些元素可以出现在其内部是有严格限制的。
+            而有些元素，诸如 li、tr 和 option，只能出现在其它某些特定的元素内部。</h4>
+        <h4>这会导致我们使用这些有约束条件的元素时遇到一些问题:</h4>
+        <table>
+            <blog-post-row></blog-post-row>
+        </table>
+        <h4>以上代码的结果是子组件会跑到table外面！</h4>
+        <h4>所以正确的写法应该是这样：</h4>
+        <table>
+            <tr is="blog-post-row"></tr>
+        </table>
+        <h4>现在的渲染结果就会是正确的。</h4>
+        <hr>
+        
+        <h4>需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：</h4>
+        <h4>
+                1.字符串 (例如：template: '...') <br>
+                2.单文件组件 (.vue)<br>
+                3.< script type="text/x-template" >
+        </h4>
+    </div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+    Vue.component("tab1",{
+        props:['content'],
+        template:  `<div class='tab'>{{ content[0] }}</div> `
+    })
+    Vue.component("tab2",{
+        props:['content'],
+        template:  `<div class='tab'>{{ content[1] }}</div> `
+    })
+    Vue.component("tab3",{
+        props:['content'],
+        template:  `<div class='tab'>{{ content[2] }}</div> `
+    })
+
+    Vue.component("blog-post-row",{
+        props:[],
+        template:  `<tr class='tab'>我是一个行</tr> `
+    })
+
+    Vue.component("str",{
+        props:[],
+        template:  `我是一个行 `
+    })
+
+    var vm = new Vue({
+        el: '#a',
+        data: {
+            currenttab:"tab1",
+            tabs:['tab1','tab2','tab3'],
+            content:['这是tab1的内容','这是tab2的内容','这是tab3的内容']
+        },
+        methods: {
+            
+        }
+    })
+</script>
+
+</html>

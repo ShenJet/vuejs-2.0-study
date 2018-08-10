@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板语法</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div id="a">
+        <p v-once>{{a}}
+            <h4>v-once:该节点中的插值不会改变。</h4>
+            <span>{{b}}</span>
+        </p>
+        <span>{{c}}</span>
+        <div>
+            {{h}}
+        </div>
+        <!-- 直接输出html -->
+        <div v-html="h"></div>
+        <!-- 双胡插值不能作用于标签特性上，须用v-bind -->
+        <div v-bind:id='"xxx"+id1'></div>
+        <!-- div id="xxxa1" -->
+        <!--  -->
+        <button v-bind:disabled='btnDis===1'>click</button>
+        <button v-show='btnshow'>click1</button>
+        <button v-if='!btnshow'>click2</button>
+        <!-- 参数 v-bind:xxxx  v-on:xxx   -->
+        <br>
+        <a v-bind:href="url">hahahah</a>
+        <div v-on:mouseover="msover" v-on:click="btnclick">div click</div>
+    </div>
+    <div id="b">
+        <!-- 修饰符 -->
+<!-- .prevent 即组织默认事件event.preventDefault() -->
+        <form action="" v-on:submit.prevent='onSub'>
+            <input type="submit" value="sub">
+        </form>
+        <!-- v-指令的缩写  v-bind:xx -> :xx   v-on:yyy -> @yyy  -->
+        <p :id="pp">hahaha</p>
+        <div @click='ojbk'>ojbk</div>
+    </div>
+</body>
+<script>
+    let vm = new Vue({
+        el: "#a",
+        data: {
+            a: "ojbk",
+            b: "hehehe",
+            c: "1334",
+            h: `<a href="http://baidu.com">baidu</a>`,
+            id1: 'a1',
+            btnDis: 1,
+            btnshow: 1,
+            url: "http://baidu.com"
+        },
+        methods:{
+            msover(){
+                console.log(this,123)
+            },
+            btnclick(){
+                console.log('clicked')
+            }
+        }
+
+    })
+
+    let vm1 = new Vue({
+        el:"#b",
+        data:{
+            pp:"pppp"
+        },
+        methods:{
+            onSub(){
+                console.log("onsub")
+            },
+            ojbk(){
+                console.log('ojbk')
+            }
+        }
+    })
+</script>
+
+</html>

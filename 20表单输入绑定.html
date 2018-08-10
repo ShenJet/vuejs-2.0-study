@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="a">
+        <h4>v-model 会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源</h4>
+        <h4>单行文本</h4>
+        <input type="text" v-model="msg"> 
+        <p>msg:{{ msg }}</p>
+        <h4>多行文本</h4>
+        <textarea v-model="multiMsg" name="" id="" cols="30" rows="3"></textarea>
+        <p style="white-space: pre-line;">{{ multiMsg }}</p>
+        <h4>单个复选框</h4>
+        <input v-model='check' type="checkbox" name="" id="">
+        {{check}}
+        <h4>多个复选框</h4>
+        <div>
+        <input v-model='users' type="checkbox" value="jack" id="jack">
+        <label for="jack">jack</label>
+        <input v-model='users' type="checkbox" value="topson" id="topson">
+        <label for="topson">topson</label>
+        <input v-model='users' type="checkbox" value="cindy" id="cindy">
+        <label for="cindy">cindy</label>
+        <p>selected users:{{ users }}</p>
+        </div>
+
+        <h4>单选按钮</h4>
+        <div>
+            <input type="radio" id="man" value="man" v-model="picked">
+            <label for="man">男</label>
+            <input type="radio" id="woman" value="woman" v-model="picked">
+            <label for="woman">女</label>
+            <p>{{ picked }}</p>
+        </div>
+
+        <h4>选择框</h4>
+        <div>
+            <select v-model='selected' id="sel">
+                <option disabled value="">请选择</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+            </select>
+            <p>{{ selected }}</p>
+        </div>
+        <h4>多项选择框</h4>
+        <div>
+            <select v-model='selectedArr' multiple id="sel1">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+            </select>
+            <p>{{ selectedArr }}</p>
+        </div>
+        <div>
+            <h4>用 v-for 渲染的动态选项：</h4>
+            <select v-model="selArr" name="" id="">
+                <option value="" disabled>请选择</option>
+                <option v-for="x in options" :value="x">
+                    {{ x }}
+                </option>
+            </select>
+            <p>{{ selArr }}</p>
+        </div>
+        <h4>有时我们可能想把值绑定到 Vue 实例的一个动态属性上，这时可以用 v-bind 实现，并且这个属性的值可以不是字符串。</h4>
+
+        <h4>复选框</h4>
+        <input type="checkbox"
+        v-model="toggle"
+        true-value="yes"
+        false-value="no"
+        >
+        <p>{{ toggle }}</p>
+
+        <h4>单选按钮</h4>
+        <input v-model="pick" :value="a" type="radio">
+        <p>{{ pick }}</p>
+
+        <h4>选择框的选项</h4>
+        <select v-model="selArr1" name="" id="">
+            <option :value="{name:'jack'}">jack</option>
+        </select>
+        <p>{{ selArr1 }}-{{ selArr1.name }}</p>
+
+        <h4>修饰符</h4>
+        <h4>1. 使用.lazy，使input框的值与数据同步发生在值的改变时，而非输入时。</h4>
+        <input v-model.lazy="lazy1" >
+        
+        <h4>2. 使用.number将用户输入的值主动转为数值类型(作用类似parseFloat)</h4>
+        <input v-model.number="number1" >
+
+        <h4>3. 使用.trim自动过滤用户输入的首尾空白字符</h4>
+        <input v-model.trim="str1" >
+
+    
+    
+    
+    
+    </div>
+    
+
+</body>
+<script src="vue.js"></script>
+<script>
+
+    var vm = new Vue({
+        el: '#a',
+        data: {
+            msg:'',
+            multiMsg:'',
+            check:false,
+            users:[],
+            picked:0,
+            selected:'',
+            selectedArr:[],
+            options:['A','B','C','D'],
+            selArr:'',
+            toggle:"",
+            pick:"",
+            a:"you picked me",
+            selArr1:'',
+            lazy1:"asdf",
+            number1:"1b2b",
+            str1:" sf123 "
+        },
+        methods: {
+            
+        }
+    })
+</script>
+
+</html>

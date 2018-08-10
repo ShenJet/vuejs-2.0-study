@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="a">
+        <h3>在自定义组件上使用v-model</h3>
+        <input type="text" v-model="msg">
+        <!-- 这么写等价于： -->
+        <input type="text" :value="msg1" @input="msg1 = $event.target.value">
+
+        <h3>当用在组件上时，v-model 则会这样：</h3>
+        <aaa :value="msg2" @input="msg2 = $event"></aaa>
+
+        <h3>为了让它正常工作，这个组件内的 <input> 必须：
+
+            将其 value 特性绑定到一个名叫 value 的 prop 上
+            在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出</h3>
+    </div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+    Vue.component("aaa",{
+        props:['value'],
+        template:`<input type="text" 
+                v-on:input="$emit('input', $event.target.value)" 
+                :value='value' />`
+    })
+    var vm = new Vue({
+        el: '#a',
+        data: {
+            msg:'',
+            msg1:'',
+            msg2:'123'
+
+        },
+        methods: {
+            
+        }
+    })
+</script>
+
+</html>

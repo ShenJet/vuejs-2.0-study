@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。
+        CSS 属性名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用单引号括起来) 来命名：
+    </h3>
+    <div id="a">
+        <h3>1、绑定内联样式的对象语法：</h3>
+        <div v-bind:style="{color:color1, fontSize: fs20}">laskdsdfhlksdh</div>
+        <h3>2、绑定内联样式的数组语法：</h3>
+        <div v-bind:style="[color2, fontSize2]">1234567890</div>
+        <h3>3、自动添加前缀</h3>
+        <h4>
+            当 v-bind:style 使用需要添加浏览器引擎前缀的 CSS 属性时，如 transform，Vue.js 会自动侦测并添加相应的前缀。
+        </h4>
+        <h3>4、多重值（v2.3.0+）</h3>
+        <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+        <!-- 这样写只会渲染数组中最后一个被浏览器支持的值。
+            在本例中，如果浏览器支持不带浏览器前缀的 flexbox，
+            那么就只会渲染 display: flex。-->
+        
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#a",
+        data:{
+            color1:"orange",
+            fs20:"30px",
+            color2:{color:"blue"},
+            fontSize2:{fontSize:"40px"}
+        },
+        methods:{
+
+        }
+    })
+
+
+</script>
+</html>

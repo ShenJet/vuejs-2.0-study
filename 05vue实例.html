@@ -1,86 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="vue.js"></script>
 </head>
+
 <body>
     <div id="a">
         <p>{{name}}</p>
     </div>
-<div id="b"></div>
+    <div id="b">
+        <p>{{time}}</p>
+    </div>
 </body>
 <script>
     // 实例化：
     // var vm = new Vue({
-        // 选项-数据
-        // data:
-        // props
-        // propsData
-        // methods
-        // computed
-        // watch
-        // 选项-DOM相关
-        // el:
-        // template
-        // render
-        // renderError
-        // 选项-生命周期函数
-        // beforeCreate
-        // created
-        // beforeMount
-        // mounted
-        // beforeUpdate
-        // updated
-        // activated
-        // deactivated
-        // beoforeDestroy
-        // destroyed
-        // errorCaptured
-        // 选项-资源
-        // ……
+    // 选项-数据
+    // data:
+    // props
+    // propsData
+    // methods
+    // computed
+    // watch
+    // 选项-DOM相关
+    // el:
+    // template
+    // render
+    // renderError
+    // 选项-生命周期函数
+    // beforeCreate
+    // created
+    // beforeMount
+    // mounted
+    // beforeUpdate
+    // updated
+    // activated
+    // deactivated
+    // beoforeDestroy
+    // destroyed
+    // errorCaptured
+    // 选项-资源
+    // ……
     // })
     // 虽然没有完全遵循 MVVM 模型，但是 Vue 的设计也受到了它的启发。
     // 因此在文档中经常会使用 vm (ViewModel 的缩写) 这个变量名表示 Vue 实例。
-    
+
     //数据与方法
-    let data1 = {name:"shenjie"}
+    let data1 = {
+        name: "shenjie"
+    }
     // Object.freeze(data1)
     let vm = new Vue({
-        el:"#a",
-        data:data1
-    // 如果data绑定了外部对象data1，则修改data1或这里的data，都会导致对方一起改变。
-    // 例如：data.name = 123, vm.name=>123
-    // 例如：vm.name = 123,  data.name=>123,
-    //只有当实例被创建时 data 中存在的属性才是响应式的。也就是说如果你添加一个新的属性，比如：
-    //     vm.b = 'hi'
-    //     那么对 b 的改动将不会触发任何视图的更新。
-    // 因此 尽量把可能用到的属性都给一个初始值
+        el: "#a",
+        data: data1
+        // 如果data绑定了外部对象data1，则修改data1或这里的data，都会导致对方一起改变。
+        // 例如：data.name = 123, vm.name=>123
+        // 例如：vm.name = 123,  data.name=>123,
+        //只有当实例被创建时 data 中存在的属性才是响应式的。也就是说如果你添加一个新的属性，比如：
+        //     vm.b = 'hi'
+        //     那么对 b 的改动将不会触发任何视图的更新。
+        // 因此 尽量把可能用到的属性都给一个初始值
     })
-    
-//    唯一的例外是使用 Object.freeze()，
-//    这会阻止修改现有的属性，也意味着响应系统无法再_追踪_变化。
-//    Object.freeze() 见48行
-//    这个时候修改data1.name = 666, vm.data => 'shenjie'
-//    vm.name = 888 : TypeError: "name" is read-only
+
+    //    唯一的例外是使用 Object.freeze()，
+    //    这会阻止修改现有的属性，也意味着响应系统无法再_追踪_变化。
+    //    Object.freeze() 见48行
+    //    这个时候修改data1.name = 666, vm.data => 'shenjie'
+    //    vm.name = 888 : TypeError: "name" is read-only
 
 
 
     // 除了数据属性，Vue 实例还暴露了一些有用的 实例属性 与 实例方法。
     // 它们都有前缀 $，以便与用户定义的属性区分开来
     console.log(vm.$data) //{name:"shenjie"}
-    console.log(vm.$el)   //<div id="a"></div>
+    console.log(vm.$el) //<div id="a"></div>
 
     // $watch 是一个实例方法
-    vm.$watch('name',function (newv, old) {
+    vm.$watch('name', function (newv, old) {
         console.log(old, newv)
     })
-    
-//    实例生命周期钩子函数  一共11个
 
+    //    实例生命周期钩子函数  一共11个
 
-
-
+    let vm1 = new Vue({
+        el: '#b',
+        data: {
+            time: new Date().toLocaleDateString()
+        },
+        // 不要在选项属性或回调上使用箭头函数
+        beforeCreate() {
+            console.log("willCreate")
+        },
+        created() {
+            console.log("created")
+        },
+        beforeMount() {
+            console.log("beforeMount")
+        },
+        mounted() {
+            console.log("mounted")
+        },
+        beforeUpdate() {
+            console.log("beforeUpdate")
+        },
+        updated() {
+            console.log("updated")
+        },
+        activated() {
+            console.log("activated")
+        },
+        deactivated() {
+            console.log("deactivated")
+        },
+        beoforeDestroy() {
+            console.log("beoforeDestroy")
+        },
+        destroyed() {
+            console.log("destroyed")
+        },
+        errorCaptured() {
+            console.log("errorCaptured")
+        }
+    })
 </script>
+
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .alert-box{
+            background-color:rgba(255, 0, 0, 0.397); 
+            border: 2px solid rgba(255, 0, 0, 0.7);
+            height: 50px;
+            width: 200px;
+            line-height: 50px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="a">
+        <h3>和 HTML 元素一样，我们经常需要在一个组件中放置内容，像这样：</h3>
+        
+        <h3>Vue 自定义的 slot 元素让这变得非常简单：</h3>
+        <h3>即  slot元素会自动存放自定义组件中的内容（可以是文本/标签）</h3>
+        <h3>在自定义组件中放置内容，自定义组件中的 slot 就叫做插槽。</h3>
+        <alert>
+            网络连接中段。
+        </alert>
+        
+    </div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+    Vue.component('alert', {
+        template: `
+            <div class="alert-box">
+                <strong>错误!</strong>
+                <slot></slot>
+            </div>
+        `
+    })
+    var vm = new Vue({
+        el: '#a',
+        data: {
+            
+        },
+        methods: {
+            
+        }
+    })
+</script>
+
+</html>

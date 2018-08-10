@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="a">
+        <h4>v-for 也可以取整数。在这种情况下，它将重复多次模板。</h4>
+        <div>
+            <span v-for="n in 10">{{ n }} </span> <br>  
+            <span v-for="n in [1,2,3,4,5]">{{ n }} </span>
+        </div>    
+        <h4>在template上使用v-for</h4>
+        <template v-for="item in items">
+            <li>{{ item.msg }}</li>
+            <li class="divider" role="presentation">111</li>
+        </template>
+        <h4>v-for with v-if</h4>
+        <h4>当它们处于同一节点，v-for 的优先级比 v-if 更高，
+            v-if 将分别重复运行于每个 v-for 循环中。</h4>
+        <li v-for="x in items" v-if="x.id==2">
+            {{ x.msg }}
+        </li>
+        <h4>自定义组件的v-for</h4>
+        <h4>2.2.0+ 的版本里，当在组件中使用 v-for 时，key 现在是必须的。</h4>
+        <xx v-for="x in items" :msg="x.msg"  :key="x.id"></xx>
+    </div>     
+    
+</body>
+<script src="vue.js"></script>
+<script>
+    Vue.component("xx",{
+        props:['msg'],
+        template:"<li>{{msg}}</li>"
+    })
+    var vm = new Vue({
+        el:"#a",
+        data:{
+            items:[
+                {id:1,msg:"jack"},
+                {id:2,msg:"tom"},
+                {id:3,msg:"helen"},
+                {id:4,msg:"cindy"},
+
+            ]
+        },
+
+    })
+
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="a">
+        <h5>1.变异方法<br>
+            <h4 style="color: red;">变异方法 (mutation method)，顾名思义，会改变被这些方法调用的原始数组。</h4>
+            push() <br>
+            pop()<br>
+            shift()<br>
+            unshift()<br>
+            splice()<br>
+            sort()<br>
+            reverse()<br>
+            <p>打开控制台，然后用上一节例子的 list1 数组调用变异方法：example1.items.push({ message: 'Baz' }) 。</p>
+        </h5>
+        <h5>
+            2.替换数组 <br>
+            <h4 style="color: red;">
+                也有非变异 (non-mutating method) 方法，例如：filter(), concat() 和 slice() 。这些不会改变原始数组，但总是返回一个新数组。
+            </h4>
+            <ul>
+                <li v-for="x in list1" :key="x.id">
+                    {{x.name}}
+                </li>
+            </ul>
+            <button @click="filt">filt</button>
+        </h5>
+        <h5>**3.注意：使用如下方法不能触发更新</h5>
+        <!-- 1.控制台： vm.list1[3] = {id:4,name:'shen',age:22} -->
+        <!-- 2.控制台： vm.list1.length = 6 -->
+
+        <h5>为解决第一类问题：</h5>
+        <h5>可以使用 Vue.set(vm.items, indexOfItem, newValue)  方法</h5>
+        <h5>Vue.$set()也一样可以</h5>
+
+        <h5>为了解决第二类问题，你可以使用 splice：<br>
+            vm.items.splice(newLength)</h5>
+
+
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#a",
+        data:{
+            list1:[
+                {id:1,name:'jack',age:18},
+                {id:2,name:'tom',age:12},
+                {id:3,name:'kobe',age:22}
+            ]
+        },
+        methods:{
+            filt:function(){
+                this.list1 = this.list1.filter(function (item) {
+                    return item.name.match(/jack/)
+                })
+            }
+        }
+    })
+
+
+</script>
+</html>

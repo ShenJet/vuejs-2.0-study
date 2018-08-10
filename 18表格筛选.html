@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="a">
+        <table class="table">
+            <tr>
+                <td><button @click="zheng">正序</button><button @click="dao">倒序</button></td>
+                <td><input type="text" @input="check_name" v-model="name"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr v-for="x in list" :key="x.id">
+                <td v-for='y in x'>{{y}}</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+    var data = [
+                {id:0,name:"Jack",sex:"male",city:"苏州"},
+                {id:1,name:"Helen",sex:"male",city:"波士顿"},
+                {id:2,name:"Tom",sex:"male",city:"上海"},
+                {id:3,name:"Stev",sex:"male",city:"北京"},
+                {id:4,name:"Seven",sex:"male",city:"广州"},
+                {id:5,name:"Jobs",sex:"male",city:"南京"},
+                {id:6,name:"Cindy",sex:"male",city:"悉尼"},
+            ]
+    var vm = new Vue({
+        el: '#a',
+        data: {
+            list0:data,
+            list:data,
+            name:""
+        },
+        methods: {
+            zheng(){
+
+            },
+            dao(){
+
+            },
+            check_name(){
+                this.list = this.list0.filter(function(v) {
+                    console.log(v.name,self.name);
+                    
+                    // return v.name == vm.name
+                    return v.name.indexOf(vm.name)!=-1
+                })
+            }
+        },
+    })
+</script>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="a">
+        <h4>有时，我们想要显示一个数组的 过滤 或 排序副本，
+            而 不 实际改变 或 重置原始数据。在这种情况下，
+            可以创建返回过滤或排序数组的 计算属性。</h4>
+        <ul>
+            <li v-for="x in numbers">{{ x }}</li>
+        </ul> 
+        <ul>
+            <li v-for="x in evenNum">{{ x }}</li>
+        </ul>
+        <ul>
+            <li v-for="x in odd(numbers)">{{ x }}</li>
+        </ul>      
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#a",
+        data:{
+            numbers: [ 1, 2, 3, 4, 5 ]
+        },
+        computed:{
+            evenNum:function(){
+                return this.numbers.filter(function(v) {
+                    return v % 2 === 0
+                })
+            },
+            oddNum:function(v){
+                return this.numbers.filter(function(v) {
+                    return v % 2 !== 0
+                })
+            }
+        },
+        methods:{
+        odd:function(x){
+                return x.filter(function(v) {
+                    return v % 2 !== 0
+                })
+            }
+        }
+    })
+
+</script>
+</html>
